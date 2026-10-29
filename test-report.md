@@ -1,13 +1,13 @@
 # Prototype validation report
 
-Validation uses synthetic `example.test` registrations only. No campaign or real-student data was used.
+Latest checks run 2026-10-29. Validation uses synthetic `example.test` registrations only. No campaign or real-student data was used.
 
 | Area | Result | Evidence |
 |---|---|---|
 | React production build | PASS | `npm run build` generated the `dist/` assets. |
-| Dependency audit | PASS | `npm audit` reported zero vulnerabilities after upgrading to Vite 8.3.5. |
-| FastAPI tests | PASS | `python -m pytest -q`: 7 passed, including React SPA/admin route fallback. |
-| Browser tests | PASS | `npm run test:e2e`: registration/referral flow, public privacy/admin access and 375px layout all passed (3 tests). |
+| Dependency audit | PASS | `npm audit`: zero vulnerabilities. |
+| FastAPI tests | PASS | `python -m pytest -q`: 15 passed, including API validation, admin access and React SPA/admin route fallback. |
+| Browser tests | PASS | `npm run test:e2e`: all 4 browser tests passed, including registration/referral, privacy/admin access, mobile layout and public navigation. |
 | Registration and duplicate handling | PASS | API and browser flow created a registration; trimmed, case-insensitive duplicate email returned HTTP 409. |
 | Validation and consent | PASS | Automated API test rejects missing consent and unknown referral code. |
 | Referral attribution and progress | PASS | Referral test created one attribution, inviter count became 1, and the UI shows 0/3 before a referral and 1/3 afterward. |
@@ -17,13 +17,13 @@ Validation uses synthetic `example.test` registrations only. No campaign or real
 | Demo data | PASS | 40 generated records are visibly marked DEMO, excluded from public count/real metrics, and removable. |
 | CSV export | PASS | Admin-authenticated export returns a CSV header and registration rows. |
 | Mobile layout | PASS | Browser test at 375px viewport found no horizontal overflow. |
-| Slide deck | PASS | Generated `.pptx` contains exactly 5 slides. |
-| Two-page plan | PASS | Generator creates the DOCX with a hard page break and a PDF; the PDF generator verifies exactly 2 pages. |
+| Slide deck | PASS | Regenerated `.pptx` contains exactly 5 slides. |
+| Two-page plan | PASS | Regenerated DOCX and PDF; the PDF generator verifies exactly 2 pages. |
 | Render configuration | PASS | Both Blueprint YAML files parsed and checked for Docker runtime, project root directory, database path and storage-mode settings. |
 | SQLite health probe | PASS | `/api/health` queries the configured SQLite database and reports `ephemeral` for the Free demo. |
 | Docker image build | NOT RUN | Docker is not installed in this environment. Render will build the checked-in `Dockerfile` during deployment. |
 
-During browser validation, one first-run assertion matched several dashboard headings. The test selector was narrowed to the records count and the rerun passed. This was a test-selector issue, not an application behavior defect.
+An initial root-level `pytest` run also collected an ignored scratch live-check script that requires a separately running app, so it failed before reaching the committed tests. Added `pytest.ini` to scope discovery to `tests/`; the normal root-level command then passed all 15 tests. The browser suite passed all 4 tests.
 
 ## Remaining limits
 

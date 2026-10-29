@@ -3,7 +3,6 @@ services:
     name: nxtwave-growth-demo
     runtime: docker
     plan: free
-    rootDir: ai-workshop-growth/ai-workshop-growth
     dockerfilePath: ./Dockerfile
     dockerContext: .
     healthCheckPath: /api/health

@@ -71,26 +71,34 @@ The public pages are served by the same single-page application at `/`, `/agenda
 
 ### Choose the right option before deploying
 
-- **Persistent registrations (recommended if you expect data to survive restarts):** use `render.yaml`. The Blueprint requests a persistent disk at `/var/data` for the paid service; review the requested plan, disk and current recurring prices before applying it. This is a recurring hosting cost, not part of the simulated ₹2,000 campaign budget.
+- **Persistent registrations (only after reviewing cost and privacy):** use `render.yaml`. The Blueprint requests a paid service and persistent disk at `/var/data`; review current recurring prices before applying it. This is separate from the simulated ₹2,000 campaign budget.
 - **Free demo only:** use `render-free.yaml`. Set `DATABASE_PATH` to `/tmp/growth.sqlite3` (not `/var/data/...`; free services cannot attach persistent disks). Render free web services sleep when idle and have an ephemeral filesystem; SQLite registrations can disappear after restarts, deploys or spin-down. The app displays a temporary-storage warning. Do not use this option to collect real registrations.
 
 ### Steps
 
-1. Push this project to a GitHub repository you control. This workspace is inside a subfolder of a larger repository; from the repository root, stage only `ai-workshop-growth/ai-workshop-growth` (or create a separate repository for this project). Review the staged files so you do not include unrelated existing changes. Do not commit `.env`, secrets, or any `.sqlite3` database.
-2. Sign in to Render and choose **New → Blueprint**; connect your GitHub repository. When asked for the Blueprint path, enter `ai-workshop-growth/ai-workshop-growth/render.yaml` for persistent deployment or `ai-workshop-growth/ai-workshop-growth/render-free.yaml` for the free demo.
-3. The Blueprint sets Render's service root directory to `ai-workshop-growth/ai-workshop-growth`; this lets Render find this project's Dockerfile and React/Python files in the repository subfolder. Review the Blueprint before applying it.
+1. Push this project to a GitHub repository you control. This repository's root contains the Dockerfile and app source. Do not commit `.env`, secrets, or any `.sqlite3` database.
+2. Sign in to Render and choose **New → Blueprint**; connect this GitHub repository and select `render.yaml` for persistent deployment or `render-free.yaml` for the free demo. Both Blueprint files live at the repository root.
+3. Keep the service root directory blank (repository root). Review the Blueprint before applying it.
 4. When prompted for `ADMIN_TOKEN`, enter a new, long, random secret. Use a password manager and do not put the value in GitHub or frontend variables.
 5. For persistent storage, confirm the Blueprint's paid web-service plan and persistent disk mount at **`/var/data`**. Confirm the recurring price before creating/upgrading the service. The app writes its SQLite database to `/var/data/growth.sqlite3`.
 6. Wait for the Docker build and deploy to finish. Render uses `/api/health` as its health check. Visit the service's `https://<your-service>.onrender.com/` URL and `/admin`.
 7. Test a synthetic registration with an `example.test` email, then check `/admin` using the `ADMIN_TOKEN` you configured. Verify duplicate rejection and the referral count before sharing the URL.
 8. If you ever decide to stop hosting, export any needed data and delete the Render service/disk through the dashboard. Do not assume deleting a GitHub repo deletes Render resources.
 
+### If you are creating a Web Service manually
+
+- **Name:** `nxtwave-growth` (or another available name); **Project:** optional; **Environment:** Production; **Language:** Docker; **Branch:** `main`; **Region:** Oregon is fine; **Root Directory:** leave blank because the repository root contains `Dockerfile`.
+- **Compute:** choose Starter (shown as $7/month in the current setup) only if you intend to configure persistent storage. The disk may have an additional charge; review Render's current price before creating it. The free instance is for a disposable demo only.
+- **Environment variables:** set `ADMIN_TOKEN` using Render's **Generate** control and do not share the value. For a free demo set `DATABASE_PATH=/tmp/growth.sqlite3` and `STORAGE_MODE=ephemeral`. For persistent SQLite set `DATABASE_PATH=/var/data/growth.sqlite3` and `STORAGE_MODE=persistent`, then attach a persistent disk mounted at `/var/data` (1 GB is sufficient for this prototype). Do not set persistent mode unless the disk is mounted.
+- **Docker settings:** use the repository `Dockerfile`; leave build/start commands at their Docker defaults. If a health-check field is shown, set it to `/api/health`.
+- After deploy, open the service URL and confirm `/api/health` returns `ok: true`. For persistent mode, confirm its storage status is `persistent`. A successful deploy does not itself mean a campaign is live or that any students registered.
+
 ### Render configuration and limitations
 
 - `Dockerfile`: Node 22 builds React; Python 3.12 runs FastAPI and serves the React build.
 - `render.yaml`: paid plan with a persistent disk configured at `/var/data`. Verify the disk is mounted and `/api/health` reports `persistent` after deployment; this repository configuration alone does not prove that the hosted service was deployed or that data survived a restart. Keep a single service instance when using SQLite.
 - `render-free.yaml`: free demo plan; SQLite path `/tmp/growth.sqlite3`, no disk, `STORAGE_MODE=ephemeral`. The API health check verifies it can query SQLite, and the public page warns that demo registrations can be lost.
-- `ADMIN_TOKEN`: configured in Render's environment UI from the Blueprint's `sync: false` prompt. It is not stored in code or exposed as a frontend variable.
+- `ADMIN_TOKEN`: configured in Render's environment UI from the Blueprint's `sync: false` prompt, or set manually when creating a web service. Generate a new strong random secret; do not commit it or share it in chat. It is not exposed as a frontend variable.
 - `DATABASE_PATH`: set by the selected Blueprint. No `VITE_API_URL` or cross-origin setup is necessary because the frontend and API share one origin.
 - SQLite and the in-memory rate limiter are appropriate only for a small prototype/single service instance. Before any real campaign, use managed persistent Postgres (and durable rate limiting), enable backups, review consent/data-retention wording and access controls, and get organiser approval.
 - Deployment is not complete until you connect your GitHub repo, choose a plan, set the secret, and verify the resulting Render URL. No live Render URL is currently configured.
@@ -116,4 +124,4 @@ Render references: [Blueprints](https://render.com/docs/blueprint-spec), [free i
 - `test-report.md`: validation results and remaining limitations.
 - `src/` and `backend/main.py`: source for the React/FastAPI prototype.
 
-The workshop date/platform/project/rewards still need organiser confirmation. No live deployment was verified during this work. Fill AI-learning/reflection placeholders from your real experience; record the video yourself and do not claim campaign results.
+The workshop date/platform/project/rewards still need organiser confirmation. No live deployment was verified during this work. Verify AI-worklog examples against your actual interaction history, record the video yourself, and do not claim campaign results.

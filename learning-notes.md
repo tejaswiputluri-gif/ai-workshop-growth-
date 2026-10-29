@@ -1,8 +1,8 @@
 # Learning Notes, Reflections and Video Script
 
-## A. AI + Learning Notes — Authentic Interaction History
+## A. AI + Learning Notes — Confirm Against Your Actual AI Sessions
 
-These notes document real design decisions, technical trade-offs, and critical interventions made while collaborating with AI to build the NxtWave Growth Challenge solution.
+These examples summarize the design decisions recorded for this project. Before submitting, verify that each prompt and AI suggestion accurately reflects your own interaction history; replace anything reconstructed or inaccurate. Do not present paraphrases as verbatim quotes.
 
 ---
 
@@ -93,69 +93,62 @@ By rejecting these suggestions, I kept the focus strictly on what matters: frict
 
 ---
 
-## C. 3-Minute Video Script (Growth Intern Submission)
+## C. Submission Form Answers
 
-*Pacing: ~130–140 words per minute | Total duration: 3 minutes (180 seconds)*
+### What did AI suggest while building this that you deliberately rejected, and why?
 
----
+AI suggested adding a fake live-registration ticker, with pop-ups implying that named students had just registered. I rejected it because those registrations would be invented social proof: it could mislead students and undermine trust in NxtWave. I chose transparent referral links and clearly labelled demo records instead. I also avoided adding an AI quiz that would add friction without helping students understand the workshop.
 
-### [0:00 – 0:30] Introduction: The Problem & Target Student
-**Visual on screen:** Open on the hero section of the AI Workshop Growth System (`http://localhost:5173/`), highlighting the headline: *"One hour. One AI project. Your first real build."* Transition briefly to Slide 1 of the growth deck.
+### AI Worklog — three examples
 
-**Spoken narration:**
-> *"Hi, I'm presenting my growth strategy for NxtWave's 60-minute AI workshop, targeting 500 final-year engineering registrations in 7 days with a ₹2,000 budget.*
-> 
-> *Our target student is a final-year B.Tech engineer—typically from a Tier-2 or Tier-3 college—balancing semester exams and placement drives. Their biggest barrier isn't interest in AI; it's confidence. They know theory, but fear technical interviews because they haven't built something tangible they can explain. Our value proposition cuts through the noise: not vague AI mastery, but building and explaining one working AI chatbot or classifier in 60 minutes with starter code."*
+*Use these concise paraphrases only if they match your actual AI interaction history. Do not present them as exact prompts or quotes if you did not ask them.*
 
----
+1. **Prompt:** How can I reach 500 final-year engineering students in seven days with ₹2,000? **AI output:** Consider paid ads and broad promotion. **What I changed/rejected:** I prioritised permission-based clubs, ambassadors and student communities, kept a ₹650 reserve, and treated every channel target as a hypothesis. **Final output:** A four-channel plan with a projected 500-registration funnel and explicit assumptions.
+2. **Prompt:** What should I build to support the registration campaign? **AI output:** Add an AI quiz and attention-grabbing social-proof effects. **What I changed/rejected:** I rejected fake registrations and skipped a quiz that would add form friction. **Final output:** A consent-based registration and referral prototype with deduplication, source tracking and clearly labelled demo data.
+3. **Prompt:** How should I measure channel acquisition and referrals without double counting? **AI output:** A simple implementation could combine the source and referral into one label. **What I changed/rejected:** I kept acquisition channel separate from the inviter code. **Final output:** Distinct source and referral attribution, plus case-insensitive duplicate-email prevention.
 
-### [0:30 – 1:10] The Growth Strategy & Channel Priorities
-**Visual on screen:** Switch to Slide 2 & Slide 4 showing the prioritized channels and transparent funnel breakdown (21,000 Reach → 2,225 Visits → 500 Registrations).
+### Your 3 Tests — growth experiments (proposed, not yet run)
 
-**Spoken narration:**
-> *"With only ₹2,000 and 7 days, running paid ads is ineffective—the budget would burn out in algorithm testing. Instead, I prioritized 4 high-trust, zero-to-low CAC organic channels:*
-> 
-> *First, College Technical Clubs targeting 150 registrations through approved club leader posts. Second, a Student Ambassador and Peer Referral program targeting 158 registrations with built-in referral incentives. Third, Permitted WhatsApp and Telegram communities for 100 registrations. And fourth, College Placement Groups for 92 registrations.*
-> 
-> *Our planned budget is ₹1,350 across club collateral and ambassador logistics, leaving a ₹650 unallocated buffer. Every channel has explicit visit-to-registration assumptions, adding up to 500 without double counting."*
+1. **Hypothesis:** A concrete promise to build and explain a small AI project will outperform generic “AI workshop” copy. **What I would test:** Show two landing-page headline variants to comparable student traffic. **Metric:** Registration conversion rate (completed registrations ÷ unique landing-page visits) for each variant.
+2. **Hypothesis:** A trusted club or student-ambassador share will bring more registrations per visit than a generic community post. **What I would test:** Use separate tagged links for approved club, ambassador and group posts during the seven-day campaign. **Metric:** Valid registrations per unique tagged visit by channel; also monitor total registrations toward 500.
+3. **Hypothesis:** Making the one-click referral share more prominent after registration will generate additional registrations. **What I would test:** Compare the current confirmation page with a version that highlights the referral CTA, using separate cohorts; do not send unsolicited messages. **Metric:** Valid referred registrations per initial registrant and the share of total valid registrations attributed to referrals.
 
----
+These are proposed campaign tests; the prototype's software tests are documented separately in `test-report.md`. No campaign test has been run and no student data has been collected.
 
-### [1:10 – 2:15] Working Asset Walkthrough: AI Workshop Growth System
-**Visual on screen:** Live browser demonstration.
-1. Scroll through the responsive workshop landing page.
-2. Fill out registration form with synthetic student details: `Ananya Rao`, `ananya@example.test`, `9876543210`, `College of Engineering`, `CSE (AI/ML)`, Year `2026`.
-3. Submit form. Show instantaneous confirmation screen with unique referral code (`ANAN582104`) and milestone progress bar (`0/3 referrals`).
-4. Attempt submitting the same email again with mixed case (`ANANYA@example.test`) to show HTTP 409 duplicate rejection.
-5. Copy referral link, open incognito tab, register a referred friend (`Rohan`). Show inviter's referral progress update to `1/3 referrals`.
-6. Navigate to `/admin`, enter the secure `ADMIN_TOKEN`, and showcase the dashboard: Total Registrations, Channel Breakdown, Daily Trend, Referral Leaderboard, and click *Export CSV*.
-7. Toggle *Load DEMO data* to display the 40 labelled DEMO records.
+### Slide-generation prompt (five-slide maximum)
+
+> Create a clean, evidence-conscious 5-slide presentation for the NxtWave Growth Intern challenge. The objective is a plan to get 500 final-year engineering students to register for “Build Your First AI Project in 60 Minutes” in 7 days on a ₹2,000 maximum budget. Slide 1: the target student, their need, and the practical workshop promise. Slide 2: four priority channels—technical clubs 150 projected registrations, student ambassadors 158, approved WhatsApp/Telegram groups 100, permission-based placement/email 92—and show these are assumptions, not results. Slide 3: a transparent funnel of 21,000 projected reach → 2,225 visits → 500 projected registrations; state reach may overlap. Slide 4: a seven-day runbook and ₹1,350 planned spend + ₹650 reserve, with no unsolicited outreach. Slide 5: show the local React/FastAPI/SQLite referral-tracking prototype, its un-deployed status, the fake-social-proof idea I rejected, and the next 24-hour improvements. Use a simple student-focused visual style, readable labels, no invented testimonials, no fake metrics, and no unsupported performance claims. Add a footer on projections stating “simulation; not yet run.”
+
+## D. 3-Minute Video Script (Growth Intern Submission)
+
+*Draft narration; rehearse once with the screen recording and adjust to stay within three minutes. The channel numbers below are projections, not achieved registrations. Confirm the AI-interaction example against your actual history before recording.*
+
+### [0:00–0:30] Student and problem
+**Visual:** Show the landing-page hero, then the student persona and value proposition on the growth-plan slide.
 
 **Spoken narration:**
-> *"Rather than just building a static landing page, I built a complete full-stack AI Workshop Growth System using React, FastAPI, and SQLite.*
-> 
-> *Here is the live flow. A student enters their details, branch, graduation year, and optional referral code. When they register, the system generates a unique referral code, a shareable link, and a prefilled 1-click WhatsApp invite. The progress tracker shows their progress toward unlockable rewards—like starter template packs at 3 referrals.*
-> 
-> *Notice our attribution hygiene: email addresses are normalized with case-insensitive unique constraints, so duplicate registrations are rejected instantly.*
-> 
-> *Now, let's open the private Admin Dashboard. Protected by a secure admin token, this gives growth marketers real-time visibility into total registrations, channel attribution from UTM links, daily registration velocity, and an ambassador leaderboard. We can search records and export clean CSV data with one click. For safe reviewer testing, I've built a sandbox mode that loads and clears 40 clearly labelled DEMO records without contaminating real metrics."*
+> "Hi, this is my plan to get 500 final-year engineering students to register for NxtWave's free, 60-minute AI workshop in seven days, with ₹2,000. I focused on a student balancing placements and coursework who wants a practical project they can explain. That's a hypothesis to test, not research or a result. The message promises a guided beginner build and clear session details."
 
----
-
-### [2:15 – 2:45] Critical Trade-Off & Rejected AI Suggestion
-**Visual on screen:** Return to Slide 5 of the presentation (Asset, Trade-offs & Strategic Rejections).
+### [0:30–1:00] Distribution plan
+**Visual:** Show the channel funnel and budget slide.
 
 **Spoken narration:**
-> *"A critical decision in this project was rejecting an initial AI recommendation. The AI strongly suggested adding fake live social-proof popups claiming 'Someone just registered from Pune' and an AI prompt quiz. 
-> 
-> I deliberately rejected both. Engineering students immediately see through artificial countdowns and fake tickers, destroying institutional trust. Furthermore, an AI quiz introduces form friction and latency. Good growth engineering is about stripping friction and establishing credibility, not manufacturing fake urgency. That's why I prioritized airtight database deduplication and transparent referral tracking instead."*
+> "I prioritised four permission-based channels: technical clubs, 150 projected registrations; ambassadors, 158; approved WhatsApp or Telegram groups, 100; and placement communities or permission-based email, 92. These are assumptions, and reach may overlap. The projections add to 500; they are not guaranteed. I plan ₹1,350 and keep ₹650 in reserve. I chose peer distribution because ₹2,000 leaves little room for paid-ad experiments."
 
----
-
-### [2:45 – 3:00] Conclusion, Learnings & Next Steps
-**Visual on screen:** Final slide showing Next Steps & Submission Checklist, then pan to the clean, running web application.
+### [1:00–2:05] Working asset
+**Visual:** In the local prototype, show the landing page and agenda, register using synthetic `example.test` details, then show the confirmation and referral link. Show the referral progress and the admin dashboard using a test token; do not reveal the token or real personal data.
 
 **Spoken narration:**
-> *"This challenge reinforced that growth isn't about spending money—it's about understanding audience psychology, building distribution leverage, and shipping tools that track every stage of the funnel.
-> 
-> If I had another 24 hours, I would connect PostgreSQL for durable persistence and integrate automated WhatsApp calendar invites to maximize live attendance. All code, slides, and the 2-page growth plan are documented and ready. Thank you!"*
+> "I built a local React and FastAPI prototype rather than a static page. Students can review the agenda, register with consent, then get a referral code and share link. The tested referral flow stores acquisition source separately from the inviter, avoiding double counting. A token-protected dashboard shows aggregate channel and referral data, with search and CSV export. Demo records are labelled and excluded from totals. It is not deployed; no real students have registered."
+
+### [2:05–2:35] Judgment and learning
+**Visual:** Show the learning-notes rejection example, then the prototype test summary.
+
+**Spoken narration:**
+> "One idea I rejected was fake live-signup pop-ups. They might attract attention, but invented social proof misleads students. I focused on transparent referrals and attribution instead. I also labelled the event date and platform unconfirmed rather than turning assumptions into promises."
+
+### [2:35–3:00] Next step and close
+**Visual:** Show the two-page plan and final slide.
+
+**Spoken narration:**
+> "If I had 24 more hours, I'd confirm event details, strengthen durable storage, and add post-registration reminders before launch. Then I'd test channel conversion with approved partners and adjust based on evidence. This taught me to turn a broad target into a measurable plan, build a useful prototype, and label assumptions. Thank you."

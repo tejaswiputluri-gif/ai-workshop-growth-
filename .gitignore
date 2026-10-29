@@ -9,6 +9,7 @@ htmlcov/
 test-results/
 playwright-report/
 scratch/
+.tsupgrader/
 .env
 *.sqlite3
 *.sqlite3-shm

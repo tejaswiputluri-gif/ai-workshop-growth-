@@ -3,7 +3,6 @@ services:
     name: nxtwave-growth
     runtime: docker
     plan: starter
-    rootDir: ai-workshop-growth/ai-workshop-growth
     dockerfilePath: ./Dockerfile
     dockerContext: .
     healthCheckPath: /api/health
