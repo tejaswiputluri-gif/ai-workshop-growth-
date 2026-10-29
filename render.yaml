@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: nxtwave-growth
+    runtime: docker
+    plan: starter
+    rootDir: ai-workshop-growth/ai-workshop-growth
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    disk:
+      name: nxtwave-growth-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: ADMIN_TOKEN
+        sync: false
+      - key: DATABASE_PATH
+        value: /var/data/growth.sqlite3
+      - key: STORAGE_MODE
+        value: persistent
